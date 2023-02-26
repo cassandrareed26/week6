@@ -31,7 +31,7 @@ podTemplate(podRetention: onFailure(), containers: [
                         ./gradlew jacocoTestReport
                         '''
                     } catch (Exception E) {
-                        echo 'Failure detected'
+                        echo 'CC Failure detected'
                     }
                }
                     
