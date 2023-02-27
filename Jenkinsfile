@@ -20,7 +20,19 @@ podTemplate(podRetention: onFailure(), containers: [
                 }
             
                 stage("Code coverage") {
+<<<<<<< HEAD
 		    try {
+=======
+		     when {                    
+			branch 'main'
+		     }
+		     sh 'printenv'
+            echo "My CC branch is: ${env.CHANGE_BRANCH}"
+            if (env.BRANCH_NAME == "feature") {
+              echo "I am the ${env.BRANCH_NAME} branch"
+	    }
+		     try {
+>>>>>>> 04f82ed28ed2b2e53c5d4cd4ff9a56ac923e2609
                         sh '''
         	            pwd
                		    cd sample1
