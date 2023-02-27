@@ -3,7 +3,7 @@ pipeline {
      stages {
           stage("Compile") {
                steps {
-                    sh "./gradlew compileJava"
+                    sh "sample1/gradlew compileJava"
                }
           }
           stage("Unit test") {
@@ -12,25 +12,25 @@ pipeline {
           }       
 	       steps {
 		    echo 'Unit test not main branch'
-                    sh "./gradlew test"
+                    sh "sample1/gradlew test"
                }
           }
           stage("Code coverage") {
 	       when { branch 'main' }
                steps {
 		    echo 'Code coverage only main branch'
-                    sh "./gradlew jacocoTestReport"
-                    sh "./gradlew jacocoTestCoverageVerification"
+                    sh "sample1/gradlew jacocoTestReport"
+                    sh "sample1/gradlew jacocoTestCoverageVerification"
                }
           }
           stage("Static code analysis") {
                steps {
-                    sh "./gradlew checkstyleMain"
+                    sh "sample1/gradlew checkstyleMain"
                }
           }
           stage("Package") {
                steps {
-                    sh "./gradlew build"
+                    sh "sample1/gradlew build"
                }
           }
 
