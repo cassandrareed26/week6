@@ -3,6 +3,7 @@ pipeline {
      stages {
           stage("Compile") {
                steps {
+		    chmod +x gradlew
                     sh "./gradlew compileJava"
                }
           }
@@ -11,7 +12,7 @@ pipeline {
                     not { branch 'main' }
           }       
 	       steps {
-		    echo 'Unit test not main branch'
+		    echo 'Unit test on not main branch'
                     sh "./gradlew test"
                }
           }
