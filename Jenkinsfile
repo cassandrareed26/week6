@@ -21,7 +21,7 @@ podTemplate(containers: [
           stage('Code coverage') {
 	    sh 'printenv'
             echo "My CC branch is: ${env.CHANGE_BRANCH}"
-            if (env.BRANCH_NAME == "feature") {
+            if (env.BRANCH_NAME == "main") {
               echo "I am the ${env.BRANCH_NAME} branch"
             }
           }
