@@ -18,7 +18,7 @@ pipeline {
           stage("Code coverage") {
 	       when { branch 'main' }
                steps {
-		    echo 'Code coverage only main branch'
+		    echo 'Code coverage for only main branch'
                     sh "./gradlew jacocoTestReport"
                     sh "./gradlew jacocoTestCoverageVerification"
                }
