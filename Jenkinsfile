@@ -93,7 +93,7 @@ podTemplate(yaml: '''
 	  /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
 	  }
 	  if (branch = feature) {
-	  /kaniko/executor --context `pwd` --destination creed26/calculator:0.1
+	  /kaniko/executor --context `pwd` --destination creed26/calculator-feature:0.1
 	  }
           '''
         }
