@@ -53,9 +53,11 @@ podTemplate(yaml: '''
 	   stage('Unit test') {
 	    try {
 		    echo "I am the ${env.BRANCH_NAME} branch"
+		    if (branch != playground) {
 		    sh '''
 	               ./gradlew test
 	               '''
+		    }
 		     } catch (Exception E) {
                         echo 'Failure detected'
                     }
