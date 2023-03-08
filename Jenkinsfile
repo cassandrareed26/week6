@@ -39,7 +39,7 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git url: 'https://github.com/cassandrareed26/week6.git', branch: 'main'
+      git url: 'https://github.com/cassandrareed26/week6.git', branch: 'master'
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
@@ -89,7 +89,7 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          if (branch = main) {
+          if (branch = master) {
 	  /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
 	  }
 	  if (branch = feature) {
