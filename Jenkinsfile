@@ -1,5 +1,5 @@
 
-
+pipeline {
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -52,7 +52,7 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
-      container('kaniko') {
+      container('gradle') {
         stage('Build a gradle project') {
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
@@ -66,4 +66,5 @@ podTemplate(yaml: '''
     }
 
   }
+}
 }
