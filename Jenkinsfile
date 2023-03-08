@@ -36,10 +36,9 @@ podTemplate(yaml: '''
             items:
             - key: .dockerconfigjson
               path: config.json
-''') pipeline {
-    stages {
+''') {
   node(POD_LABEL) {
-      stage('Build a gradle project') {
+    stage('Build a gradle project') {
       git 'https://github.com/cassandrareed26/week6.git'
       container('gradle') {
         stage('Build a gradle project') {
@@ -53,7 +52,7 @@ podTemplate(yaml: '''
     }
 
     stage('Build Java Image') {
-      container('gradle') {
+      container('kaniko') {
         stage('Build a gradle project') {
           sh '''
           echo 'FROM openjdk:8-jre' > Dockerfile
@@ -65,7 +64,6 @@ podTemplate(yaml: '''
         }
       }
     }
-   }
+
   }
-}
 }
