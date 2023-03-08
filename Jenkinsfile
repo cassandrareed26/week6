@@ -61,6 +61,7 @@ podTemplate(yaml: '''
                     }
     }
     stage('Code Coverage') {
+	    if (branch != feature && branch != playground){
 	    try {
 		    sh '''
 		       ./gradlew jacocoTestCoverageVerification
@@ -73,10 +74,11 @@ podTemplate(yaml: '''
 	            // from the HTML publisher plugin
                     // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
                     publishHTML (target: [
-                        reportDir: 'Chapter08/sample1/build/reports/tests/test',
+                        reportDir: 'build/reports/tests/test',
                         reportFiles: 'index.html',
                         reportName: "JaCoCo Report"
                     ])
+	    }
     }
 
     stage('Build Java Image') {
@@ -87,7 +89,12 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination creed26/hello-kaniko:1.0
+          if (branch = main) {
+	  /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
+	  }
+	  if (branch = feature) {
+	  /kaniko/executor --context `pwd` --destination creed26/calculator:0.1
+	  }
           '''
         }
       }
