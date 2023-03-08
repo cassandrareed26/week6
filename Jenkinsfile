@@ -65,6 +65,9 @@ podTemplate(yaml: '''
 	  if (branch = feature) then {
 	  /kaniko/executor --context `pwd` --destination creed26/calculator-feature:0.1
 	  }
+	  fi {
+	  echo "Must be the playground"
+	  }
           '''
         }
       }
