@@ -59,15 +59,7 @@ podTemplate(yaml: '''
           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
           echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
           mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          if (branch = master) then {
-	        /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
-	      }
-	      if (branch = feature) then {
-	        /kaniko/executor --context `pwd` --destination creed26/calculator-feature:0.1
-	      }
-	     fi {
-	      echo "Must be the playground"
-	      }
+          /kaniko/executor --context `pwd` --destination creed26/hello-kaniko:1.0
           '''
         }
       }
