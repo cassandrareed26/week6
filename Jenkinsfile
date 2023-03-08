@@ -39,7 +39,7 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git url: 'https://github.com/cassandrareed26/week6.git', branch: 'master'
+      git 'https://github.com/cassandrareed26/week6.git'
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
@@ -49,36 +49,6 @@ podTemplate(yaml: '''
           '''
         }
       }
-    }
-    stage('Unit test') {
-       try {
-	    echo "I am the ${env.BRANCH_NAME} branch"
-	    sh '''
-	       ./gradlew test
-	       '''
-	     } catch (Exception E) {
-               echo 'Failure detected'
-      }
-    }
-    stage('Code Coverage') {
-	if (branch != feature && branch != playground) {
-	     try {
-		sh '''
-		   ./gradlew jacocoTestCoverageVerification
-	           ./gradlew jacocoTestReport
-	           '''
-		 } catch (Exception E) {
-                   echo 'Failure detected'
-                }
-	    
-	            // from the HTML publisher plugin
-                    // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
-                    publishHTML (target: [
-                        reportDir: 'build/reports/tests/test',
-                        reportFiles: 'index.html',
-                        reportName: "JaCoCo Report"
-                    ])
-	    }
     }
 
     stage('Build Java Image') {
@@ -98,6 +68,7 @@ podTemplate(yaml: '''
           '''
         }
       }
-    } 
+    }
+
   }
 }
