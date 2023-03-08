@@ -39,7 +39,7 @@ podTemplate(yaml: '''
 ''') {
   node(POD_LABEL) {
     stage('Build a gradle project') {
-      git url: 'https://github.com/cassandrareed26/kaniko.git', branch: 'main'
+      git url: 'https://github.com/cassandrareed26/week6.git', branch: 'main'
       container('gradle') {
         stage('Build a gradle project') {
           sh '''
@@ -61,7 +61,6 @@ podTemplate(yaml: '''
                     }
     }
     stage('Code Coverage') {
-	    //if (branch != feature){
 	    try {
 		    sh '''
 		       ./gradlew jacocoTestCoverageVerification
