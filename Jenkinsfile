@@ -1,5 +1,6 @@
 
 pipeline {
+    agent any
 podTemplate(yaml: '''
     apiVersion: v1
     kind: Pod
@@ -38,7 +39,8 @@ podTemplate(yaml: '''
               path: config.json
 ''') {
   node(POD_LABEL) {
-    stage('Build a gradle project') {
+      stages {
+      stage('Build a gradle project') {
       git 'https://github.com/cassandrareed26/week6.git'
       container('gradle') {
         stage('Build a gradle project') {
@@ -64,7 +66,7 @@ podTemplate(yaml: '''
         }
       }
     }
-
+   }
   }
 }
 }
