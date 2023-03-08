@@ -50,26 +50,26 @@ podTemplate(yaml: '''
         }
       }
     }
-	   stage('Unit test') {
-	    try {
-		    echo "I am the ${env.BRANCH_NAME} branch"
-		    sh '''
-	               ./gradlew test
-	               '''
-		     } catch (Exception E) {
-                        echo 'Failure detected'
-                    }
+    stage('Unit test') {
+       try {
+	    echo "I am the ${env.BRANCH_NAME} branch"
+	    sh '''
+	       ./gradlew test
+	       '''
+	     } catch (Exception E) {
+               echo 'Failure detected'
+      }
     }
     stage('Code Coverage') {
-	    if (branch != feature && branch != playground){
-	    try {
-		    sh '''
-		       ./gradlew jacocoTestCoverageVerification
-	               ./gradlew jacocoTestReport
-	               '''
-		     } catch (Exception E) {
-                        echo 'Failure detected'
-                    }
+	if (branch != feature && branch != playground) {
+	     try {
+		sh '''
+		   ./gradlew jacocoTestCoverageVerification
+	           ./gradlew jacocoTestReport
+	           '''
+		 } catch (Exception E) {
+                   echo 'Failure detected'
+                }
 	    
 	            // from the HTML publisher plugin
                     // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
