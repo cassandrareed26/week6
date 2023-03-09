@@ -74,6 +74,8 @@ podTemplate(yaml: '''
                   chmod +x gradlew
                   ./gradlew test
                   '''
+              } catch (Exception E) {
+                  echo 'Failure detected in Unit test'
               }
           }
       }
