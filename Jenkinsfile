@@ -66,7 +66,7 @@ podTemplate(yaml: '''
     }
       stage('Unit test') {
           echo "I am the ${env.BRANCH_NAME} branch"
-          if (env.BRANCH__NAME == 'feature' | 'master')
+          if (env.BRANCH__NAME == 'feature' || 'master')
           {
               try{
                   sh '''
