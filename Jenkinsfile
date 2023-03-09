@@ -55,7 +55,7 @@ podTemplate(yaml: '''
       container('kaniko') {
         stage('Build a gradle project') {
 	 echo "I am the ${env.BRANCH_NAME} branch"
-	  if (env.BRANCH_NAME == 'master') then {
+	  if (env.BRANCH_NAME == 'master') {
 		  try{
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
@@ -67,7 +67,7 @@ podTemplate(yaml: '''
 		  } catch (Exception E) {
                   echo 'Failure detected'
               }
-		  if (env.BRANCH_NAME == 'feature') then {
+		  if (env.BRANCH_NAME == 'feature') {
 	            try{
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
@@ -79,10 +79,9 @@ podTemplate(yaml: '''
 		    } catch (Exception E) {
                       echo 'Failure detected'
               }
-			  fi {
-				  echo "Must be the playground branch"
+		    if (env.BRANCH_NAME == 'playground') {
+				  echo "playground branch nothing to do"
 			  }
-        
         }
       }
     }
