@@ -54,19 +54,41 @@ podTemplate(yaml: '''
     stage('Build Java Image') {
       container('kaniko') {
         stage('Build a gradle project') {
-          sh '''
-          echo 'FROM openjdk:8-jre' > Dockerfile
-          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
-          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
-          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
-          /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
-          '''
+	 echo "I am the ${env.BRANCH_NAME} branch"
+	  if (env.BRANCH_NAME == master) then {
+		  try{
+			  sh '''
+                          echo 'FROM openjdk:8-jre' > Dockerfile
+                          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+                          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+                          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+                          /kaniko/executor --context `pwd` --destination creed26/calculator:1.0
+                          '''
+		  } catch (Exception E) {
+                  echo 'Failure detected'
+              }
+		  if (env.BRANCH_NAME == feature) then {
+	            try{
+			  sh '''
+                          echo 'FROM openjdk:8-jre' > Dockerfile
+                          echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
+                          echo 'ENTRYPOINT ["java", "-jar", "app.jar"]' >> Dockerfile
+                          mv /mnt/calculator-0.0.1-SNAPSHOT.jar .
+                          /kaniko/executor --context `pwd` --destination creed26/calculator-feature:0.1
+                          '''
+		    } catch (Exception E) {
+                      echo 'Failure detected'
+              }
+			  fi {
+				  echo "Must be the playground branch"
+			  }
+        
         }
       }
     }
       stage('Unit test') {
           echo "I am the ${env.BRANCH_NAME} branch"
-          if (env.BRANCH_NAME != 'playground')
+          if (env.BRANCH_NAME != playground)
           {
               try{
                   sh '''
