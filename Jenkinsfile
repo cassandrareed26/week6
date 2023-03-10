@@ -48,6 +48,43 @@ podTemplate(yaml: '''
           mv ./build/libs/calculator-0.0.1-SNAPSHOT.jar /mnt
           '''
         }
+	 stage('Unit test') {
+          echo "I am the ${env.BRANCH_NAME} branch"
+          if (env.BRANCH_NAME != 'playground')
+          {
+              try{
+                  sh '''
+                  pwd
+                  chmod +x gradlew
+                  ./gradlew test
+                  '''
+              } catch (Exception E) {
+                  echo 'Failure detected in Unit test'
+              }
+          }
+      }
+	stage('Code Coverage') {
+          echo "I am the ${env.BRANCH_NAME} branch"
+          if (env.BRANCH_NAME == 'master'){
+              try
+              {
+                  sh '''
+                  ./gradlew jacocoTestCoverageVerification
+	          ./gradlew jacocoTestReport
+	          '''
+              } catch (Exception E) {
+                  echo 'Failure detected in code coverage'
+              }
+              
+              // from the HTML publisher plugin
+              // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
+              publishHTML (target: [
+                  reportDir: 'build/reports/tests/test',
+                  reportFiles: 'index.html',
+                  reportName: "JaCoCo Report"
+                  ])
+          }
+	}
       }
     }
 
@@ -83,46 +120,10 @@ podTemplate(yaml: '''
 				  echo "playground branch nothing to do"
 			  }
         }
+	  }
+	}
       }
     }
-      stage('Unit test') {
-          echo "I am the ${env.BRANCH_NAME} branch"
-          if (env.BRANCH_NAME != 'playground')
-          {
-              try{
-                  sh '''
-                  pwd
-                  chmod +x gradlew
-                  ./gradlew test
-                  '''
-              } catch (Exception E) {
-                  echo 'Failure detected in Unit test'
-              }
-          }
-      }
-      stage('Code Coverage') {
-          echo "I am the ${env.BRANCH_NAME} branch"
-          if (env.BRANCH_NAME == 'master'){
-              try
-              {
-                  sh '''
-                  ./gradlew jacocoTestCoverageVerification
-	               ./gradlew jacocoTestReport
-	               '''
-              } catch (Exception E) {
-                  echo 'Failure detected in code coverage'
-              }
-              
-              // from the HTML publisher plugin
-              // https://www.jenkins.io/doc/pipeline/steps/htmlpublisher/
-              publishHTML (target: [
-                  reportDir: 'build/reports/tests/test',
-                  reportFiles: 'index.html',
-                  reportName: "JaCoCo Report"
-                  ])
-          }
-      }
   }
 }
-  }
-}
+
