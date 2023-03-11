@@ -96,7 +96,8 @@ podTemplate(yaml: '''
         stage('Build a gradle project') {
 	 echo "I am the ${env.BRANCH_NAME} branch"
 	  if (env.BRANCH_NAME == 'master') {
-		  try{
+		  try
+		  {
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
                           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
@@ -108,7 +109,8 @@ podTemplate(yaml: '''
                   echo 'Failure detected'
               }
 		  if (env.BRANCH_NAME == 'feature') {
-	            try{
+	            try
+		    {
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
                           echo 'COPY ./calculator-0.0.1-SNAPSHOT.jar app.jar' >> Dockerfile
@@ -118,9 +120,9 @@ podTemplate(yaml: '''
                           '''
 		    } catch (Exception E) {
                       echo 'Failure detected'
-              }
-		    else (env.BRANCH_NAME == 'playground') {
-				  echo "playground branch so there is nothing to do"
+		    }
+		    else {
+				  echo "There is nothing to do"
 			  }
 		  }
 	  }
@@ -128,4 +130,3 @@ podTemplate(yaml: '''
       }
     }
   }
-}
