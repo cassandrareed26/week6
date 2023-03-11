@@ -84,6 +84,9 @@ podTemplate(yaml: '''
                   reportName: "JaCoCo Report"
                   ])
           }
+		else {
+			echo "I am not the master so I will be skipping this stage"
+		}
 	}
       }
     }
