@@ -107,7 +107,7 @@ podTemplate(yaml: '''
 		  } catch (Exception E) {
                   echo 'Failure detected'
               }
-		  if (env.BRANCH_NAME == 'feature') {
+		  else if (env.BRANCH_NAME == 'feature') {
 	            try{
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
@@ -119,14 +119,13 @@ podTemplate(yaml: '''
 		    } catch (Exception E) {
                       echo 'Failure detected'
               }
-		    if (env.BRANCH_NAME == 'playground') {
-				  echo "playground branch nothing to do"
+		    else (env.BRANCH_NAME == 'playground') {
+				  echo "playground branch so there is nothing to do"
 			  }
-        }
+		  }
 	  }
 	}
       }
     }
   }
 }
-
