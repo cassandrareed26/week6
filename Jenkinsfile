@@ -107,7 +107,7 @@ podTemplate(yaml: '''
 		  } catch (Exception E) {
                   echo 'Failure detected'
               }
-		  else if (env.BRANCH_NAME == 'feature') {
+		  if (env.BRANCH_NAME == 'feature') {
 	            try{
 			  sh '''
                           echo 'FROM openjdk:8-jre' > Dockerfile
