@@ -108,6 +108,7 @@ podTemplate(yaml: '''
 		  } catch (Exception E) {
                   echo 'Failure detected'
               }
+	  }
 		  if (env.BRANCH_NAME == 'feature') {
 	            try
 		    {
@@ -121,6 +122,7 @@ podTemplate(yaml: '''
 		    } catch (Exception E) {
                       echo 'Failure detected'
 		    }
+		  }
 		    else {
 				  echo "There is nothing to do"
 			  }
@@ -128,5 +130,3 @@ podTemplate(yaml: '''
 	  }
 	}
       }
-    }
-  }
